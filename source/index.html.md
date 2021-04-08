@@ -97,6 +97,7 @@ Parameter  | Description
 ---------  | -----------
 =  | Single Filter Option
 []=  | Multiple Filter Option, ex: `?param[]=1,&param[]=2` will result in `param[1,2]`.
+...  | Range filter. Retrieves data that fit between two parameters. Note: the param must be defined as `mulitple_range` in the back end.  It can be used in tree distinct ways. ?param1...param2; ?...param2; ?param1...
 
 > Example (Single) `GET /api/v1/endpoint?param=a`:
 
@@ -157,6 +158,40 @@ Parameter  | Description
     },
     {
         "param": "b",
+    },
+]
+
+```
+
+# Pagination
+
+Pagination on the API is done by using `page` and `per_page` options as URL parameters to control the number of items retrieved, and the set of items to be retrieved.
+
+### Available Pagination Options
+
+Parameter  | Description
+---------  | -----------
+page  | the number of page, defined by the total number of records to be returned considering the per_page option
+per_page | the number of items to be retrieved - Default is set to 20.
+
+> Example  `GET /api/v1/endpoint?page=1&per_page=5`:
+
+````json
+[
+    {
+        "param": "b",
+    },
+    {
+        "param": "a",
+    },
+    {
+        "param": "c",
+    },
+    {
+        "param": "d",
+    },
+    {
+        "param": "e",
     },
 ]
 
@@ -389,6 +424,29 @@ name | String | name of the action
 subject | String | represents a entity to receive an action
 
 # Organizations
+
+### Organization Text Search
+
+Searching on orgs using full text search. Endpoint used for searching orgs by partial name/email address values.
+
+Example => Organization: Company of Industrial Segment on Technology
+
+`GET /api/v1/search/organizations?name[]=Technology`
+
+`GET /api/v1/search/organizations?name[]=Industrial`
+
+Using this endpoint, complex text searches can be performed to retrieve data.
+
+## Search Text params 
+
+Parameters | Description
+---------  | ----------- 
+name  | -
+email  | -
+
+
+`GET /api/v1/search/organizations`
+
 
 ### Organization Fields
 
