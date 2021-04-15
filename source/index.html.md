@@ -5,7 +5,6 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - JSON
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -429,7 +428,7 @@ subject | String | represents a entity to receive an action
 
 Searching on orgs using full text search. Endpoint used for searching orgs by partial name/email address values.
 
-Example => Organization: Company of Industrial Segment on Technology
+Example => `Organization: Company of Industrial Segment on Technology`
 
 `GET /api/v1/search/organizations?name[]=Technology`
 
@@ -547,7 +546,7 @@ It returns all organizations
 Parameter  | Description
 ---------  | -----------
 id  | retrieve organization under specific id.
-name  | retrieves an organization by name addresses.
+name  | retrieves an organization by name.
 email  | retrieves an organization by email addresses.
 category_id  | retrieves an organization by category_id.
 
@@ -827,7 +826,7 @@ Parameter  | Description
 ---------  | -----------
 id  | retrieve team under specific id.
 name  | retrieves an team by name.
-sex  | retrieves an team by sex addresses.
+sex  | retrieves an team by sex.
 
 ### Includable Resources
 

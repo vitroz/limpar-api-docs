@@ -1,0 +1,12 @@
+docs:
+  build: .
+  container_name: limpar-api-docs
+  ports:
+    - "4567:4567"
+  volumes:
+    - ".:/app/source"
+  networks:
+    - limpar_network
+networks:
+  limpar_network:
+    name: limpar_network
