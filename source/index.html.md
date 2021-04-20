@@ -1143,7 +1143,7 @@ Parameter | Description
 --------- | -----------
 ID | The ID of the game to retrieve
 
-# Rosters (Schedules)
+# Rosters
 
 ### Roster Fields
 
