@@ -880,7 +880,7 @@ Parameter | Description
 --------- | -----------
 ID | The ID of the team to retrieve
 
-# Games
+# Games (Schedules)
 
 ### Game Fields
 
