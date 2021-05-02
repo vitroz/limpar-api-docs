@@ -725,6 +725,19 @@ Types can be retrieved though organization categories
 ]
 ```
 
+# Athletics
+
+This section lists athletics data points accessible through other endpoints as includable resources.
+
+### Associations
+
+Association | Additional Info
+--------- |  -----------
+Athletic Level |  Represents a team school level (university, high school, etc).
+Athletic Association | represents an athletic association tied to a team.
+Athletic Conference | represents an athletic conference tied to team.
+Athletic Sport | represents a sport, accessible through a team.
+
 # Teams
 
 ### Team Fields
@@ -1296,7 +1309,7 @@ team | retrieve rosters alongside team associated.
 
 ### Sortable Columns
 
-`GET /api/v1/teams?sorting_by[]=<param>`
+`GET /api/v1/rosters?sorting_by[]=<param>`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -1346,4 +1359,539 @@ This endpoint retrieves a specific roster.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the game to retrieve
+ID | The ID of the roster to retrieve
+
+
+# Sport Statistics
+
+### Sport Statistics Fields
+
+Fields | Type | Additional Info
+--------- | ------- | -----------
+athletic_sport_id | String | (UUID) represents a sport.
+statistic_id | String | (UUID) represents a statistic record.
+
+
+## Get All Sport Statistics
+
+It returns all sport statistics
+
+### HTTP Request
+
+`GET /api/v1/sport_statistics`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "athletic_sport_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2"
+    },
+]
+```
+> sport statistics alongside sport involved:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "athletic_sport_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2",
+        "sport": [
+            {
+                "id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+                "name": "Soccer"
+            }
+        ]
+    },
+]
+```
+
+### Available Filters
+
+Parameter  | Description
+---------  | -----------
+id  | retrieve sport statistic under specific id.
+athletic_sport_id  | retrieves sport statistic by athletic_sport_id.
+statistic_id  | retrieves sport statistic by statistic_id.
+
+### Includable Resources
+
+`GET /api/v1/sport_statistics?include[]=sport&include[]=statistic`
+
+Parameter  | Description
+---------  | -----------
+sport | retrieve sport statistics alongside sport associated.
+statistic | retrieve sport statistics alongside statistic associated.
+
+### Sortable Columns
+
+`GET /api/v1/sport_statistics?sorting_by[]=<param>`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+created_at | DESC | retrieve rosters sorted by created at.
+
+
+<aside class="success">
+Remember — To use the token on request header, to be able to perform requests!
+</aside>
+
+## Get a Specific Sport Statistic
+
+> The above command returns JSON structured like this:
+
+```json
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "athletic_sport_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2"
+    },
+```
+
+This endpoint retrieves a specific sport statistic.
+
+### HTTP Request
+
+`GET api/v1/sport_statistics/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the sport_statistics to retrieve
+
+
+# Box Scores
+
+### Box Scores Fields
+
+Fields | Type | Additional Info
+--------- | ------- | -----------
+value | Integer | -
+athletic_roster_id | String | (UUID) represents a roster.
+statistic_id | String | (UUID) represents a statistic record.
+game_id | String | (UUID) represents a game record.
+
+
+## Get All Box Scores
+
+It returns all box scores
+
+### HTTP Request
+
+`GET /api/v1/box_scores`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "value": 0,
+        "athletic_sport_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2",
+        "game_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+
+    },
+]
+```
+> box score alongside statistic involved:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "athletic_roster_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2",
+        "game_id": "p15ob180-123a-1f49-bol2-hi10f21c80p2",
+        "statistic": [
+            {
+                "id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+                "description": "something",
+                "abbreviation": "abbrev"
+            }
+        ]
+    },
+]
+```
+
+### Available Filters
+
+Parameter  | Description
+---------  | -----------
+id  | retrieve box scores under specific id.
+value  | retrieve box scores under specific value.
+
+### Includable Resources
+
+`GET /api/v1/box_scores?include[]=roster&include[]=statistic&include[]=game`
+
+Parameter  | Description
+---------  | -----------
+roster | retrieve box scores alongside roster associated.
+statistic | retrieve box scores alongside statistic associated.
+game | retrieve box scores alongside game associated.
+
+### Sortable Columns
+
+`GET /api/v1/box_scores?sorting_by[]=<param>`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+created_at | DESC | retrieve rosters sorted by created at.
+
+
+<aside class="success">
+Remember — To use the token on request header, to be able to perform requests!
+</aside>
+
+## Get a Specific Box Score
+
+> The above command returns JSON structured like this:
+
+```json
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "value": "some",
+        "athletic_roster_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2",
+        "game_id": "o14ob180-123a-1f49-bol2-hi10f21c90u3"
+    },
+```
+
+This endpoint retrieves a specific box score.
+
+### HTTP Request
+
+`GET api/v1/box_scores/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the box score to retrieve
+
+
+
+# Game Matches
+
+### Game Matches Fields
+
+Fields | Type | Additional Info
+--------- | ------- | -----------
+match | Integer | -
+home_team_points | Integer | -
+away_team_points | Integer | -
+game_id | String | (UUID) represents a game record.
+
+
+## Get All Game Matches
+
+It returns all game matches
+
+### HTTP Request
+
+`GET /api/v1/game_matches`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "match": 0,
+        "home_team_points": 0,
+        "away_team_points": 0,
+        "game_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+
+    },
+]
+```
+> game match alongside game involved:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "athletic_roster_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+        "statistic_id": "c25ob180-123a-1f49-bol2-hi10f21c80p2",
+        "game_id": "p15ob180-123a-1f49-bol2-hi10f21c80p2",
+        "game": [
+            {
+                "id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+                "venue": "something"
+                .
+                .
+                .
+            }
+        ]
+    },
+]
+```
+
+### Available Filters
+
+Parameter  | Description
+---------  | -----------
+id  | retrieve box scores under specific id.
+match  | retrieve box scores under specific match.
+home_team_points  | retrieve box scores under specific home_team_points.
+away_team_points  | retrieve box scores under specific away_team_points.
+
+### Includable Resources
+
+`GET /api/v1/game_matches?include[]=game&include[]=sport_match`
+
+Parameter  | Description
+---------  | -----------
+sport_match | retrieve box scores alongside sport match associated.
+game | retrieve box scores alongside game associated.
+
+### Sortable Columns
+
+`GET /api/v1/game_matches?sorting_by[]=<param>`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+created_at | DESC | retrieve game matches sorted by created at.
+
+
+<aside class="success">
+Remember — To use the token on request header, to be able to perform requests!
+</aside>
+
+## Get a Specific Game Match
+
+> The above command returns JSON structured like this:
+
+```json
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "match": 0,
+        "home_team_points": 0,
+        "away_team_points": 0,
+        "game_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+    },
+```
+
+This endpoint retrieves a specific game match.
+
+### HTTP Request
+
+`GET api/v1/game_matches/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the box score to retrieve
+
+
+
+# Sport Matches
+
+### Sport Matches Fields
+
+Fields | Type | Additional Info
+--------- | ------- | -----------
+label | String | -
+athletic_sport_id | String | (UUID) represents a sport record.
+
+
+## Get All Sport Matches
+
+It returns all sport matches
+
+### HTTP Request
+
+`GET /api/v1/sport_matches`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "label": "lbl",
+        "athletic_sport_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+
+    },
+]
+```
+> sport match alongside sport involved:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "label": "lbl",
+        "athletic_sport_id": "p15ob180-123a-1f49-bol2-hi10f21c80p2",
+        "sport": [
+            {
+                "id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+                "name": "soccer"
+            }
+        ]
+    },
+]
+```
+
+### Available Filters
+
+Parameter  | Description
+---------  | -----------
+id  | retrieve sport match under specific id.
+match  | retrieve sport match under specific match.
+athletic_sport_id  | retrieve sport match under specific athletic_sport_id.
+
+
+### Includable Resources
+
+`GET /api/v1/sport_matches?include[]=sport`
+
+Parameter  | Description
+---------  | -----------
+sport | retrieve sport_matches alongside sport associated.
+
+### Sortable Columns
+
+`GET /api/v1/sport_matches?sorting_by[]=<param>`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+created_at | DESC | retrieve game matches sorted by created at.
+
+
+<aside class="success">
+Remember — To use the token on request header, to be able to perform requests!
+</aside>
+
+## Get a Specific Sport Match
+
+> The above command returns JSON structured like this:
+
+```json
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "match": "lbl",
+        "athletic_sport_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+
+    },
+```
+
+This endpoint retrieves a specific game match.
+
+### HTTP Request
+
+`GET api/v1/sport_matches/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the box score to retrieve
+
+
+# Game Scores
+
+### Sport Game Score Fields
+
+Fields | Type | Additional Info
+--------- | ------- | -----------
+label | String | -
+athletic_sport_id | String | (UUID) represents a sport record.
+
+
+## Get All Sport Game Scores
+
+It returns all sport game scores
+
+### HTTP Request
+
+`GET /api/v1/sport_game_scores`
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "label": "lbl",
+        "athletic_sport_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+    },
+]
+```
+> sport game scores alongside sport involved:
+
+```json
+[
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "label": "lbl",
+        "athletic_sport_id": "p15ob180-123a-1f49-bol2-hi10f21c80p2",
+        "sport": [
+            {
+                "id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
+                "name": "soccer"
+            }
+        ]
+    },
+]
+```
+
+### Available Filters
+
+Parameter  | Description
+---------  | -----------
+id  | retrieve sport game score under specific id.
+label  | retrieve sport game score under specific label.
+athletic_sport_id  | retrieve sport game score under specific athletic_sport_id.
+
+
+### Includable Resources
+
+`GET /api/v1/sport_game_scores?include[]=sport`
+
+Parameter  | Description
+---------  | -----------
+sport | retrieve sport_game_scores alongside sport associated.
+
+### Sortable Columns
+
+`GET /api/v1/sport_game_scores?sorting_by[]=<param>`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+created_at | DESC | retrieve sport game score sorted by created at.
+
+
+<aside class="success">
+Remember — To use the token on request header, to be able to perform requests!
+</aside>
+
+## Get a Specific Sport Game Score
+
+> The above command returns JSON structured like this:
+
+```json
+    {
+        "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
+        "label": "lbl",
+        "athletic_sport_id": "l43ob180-123a-1f49-bol2-hi10f21c80tr"
+    },
+```
+
+This endpoint retrieves a specific game match.
+
+### HTTP Request
+
+`GET api/v1/sport_game_scores/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the sport game score to retrieve
