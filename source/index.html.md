@@ -204,7 +204,7 @@ It is also used on authentication tokens, to keep it alive for 2 hours, and rene
 
 Cache for requests has a default duration of 10 minutes, and it expires and refreshs automatically next time resource is requested.
 
-### Available Pagination Options
+### Skipping Cache
 
 Parameter  | Description
 ---------  | -----------
