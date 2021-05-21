@@ -196,6 +196,43 @@ per_page | the number of items to be retrieved - Default is set to 20.
 
 ```
 
+# Cache
+
+Caching is used across the API for all '/' `index` requests, to improve response time on subsequent requests.
+
+It is also used on authentication tokens, to keep it alive for 2 hours, and renew it everytime it is used during this time window.
+
+Cache for requests has a default duration of 10 minutes, and it expires and refreshs automatically next time resource is requested.
+
+### Available Pagination Options
+
+Parameter  | Description
+---------  | -----------
+fresh  | can be used as a query parameter to skip cache and return current response.
+
+> Example  `GET /api/v1/endpoint?page=1&per_page=5&fresh`:
+
+````json
+[
+    {
+        "param": "a",
+    },
+    {
+        "param": "b",
+    },
+    {
+        "param": "c",
+    },
+    {
+        "param": "d",
+    },
+    {
+        "param": "e",
+    },
+]
+
+```
+
 # Users
 
 ### User Fields
@@ -899,11 +936,11 @@ ID | The ID of the team to retrieve
 
 Fields | Type | Additional Info
 --------- | ------- | -----------
-season_start | Integer | -
-season_end | Integer |-
+athletic_season_id | String | (UUID) represents a season.
 home_team_id | String | (UUID) represents a team.
 away_team_id | String | (UUID) represents a team.
 venue | String | -
+home | Boolean | A game that has occured at its foundation place indicator
 data_time | Date | The time of the match
 
 
@@ -921,8 +958,7 @@ It returns all games
 [
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue",
@@ -930,8 +966,7 @@ It returns all games
     },
     {
         "id": "9e7278f4-a99c-4923-9f02-635a662a65c7",
-        "season_start": 2018,
-        "season_end": null,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "bfb6b160-33b8-4215-8980-063058491fca",
         "away_team_id": "15268441-855b-42bc-a8b1-71ca11c4fc92",
         "venue": "Venue 2",
@@ -945,8 +980,7 @@ It returns all games
 [
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue 1",
@@ -968,8 +1002,7 @@ It returns all games
     },
     {
         "id": "9e7278f4-a99c-4923-9f02-635a662a65c7",
-        "season_start": 2018,
-        "season_end": null,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "bfb6b160-33b8-4215-8980-063058491fca",
         "away_team_id": "15268441-855b-42bc-a8b1-71ca11c4fc92",
         "venue": "Venue 1",
@@ -1000,8 +1033,7 @@ It returns all games
 [
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue 1",
@@ -1009,8 +1041,7 @@ It returns all games
     },
     {
         "id": "1aa7d5d5-47c0-4b7f-aa40-f894faff2753",
-        "season_start": 2019,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b9386ac4-ccb9-4532-8c4e-b2e7551c5d07",
         "away_team_id": "6295c59d-6cc0-4161-832e-a398185f147c",
         "venue": "Venue 2",
@@ -1027,8 +1058,7 @@ It returns all games
 [
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue 1",
@@ -1036,8 +1066,7 @@ It returns all games
     },
     {
         "id": "1aa7d5d5-47c0-4b7f-aa40-f894faff2753",
-        "season_start": 2019,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b9386ac4-ccb9-4532-8c4e-b2e7551c5d07",
         "away_team_id": "6295c59d-6cc0-4161-832e-a398185f147c",
         "venue": "Venue 2",
@@ -1045,8 +1074,7 @@ It returns all games
     }
     {
         "id": "1aa7d5d5-47c0-4b7f-aa40-f894faff2753",
-        "season_start": 2019,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b9386ac4-ccb9-4532-8c4e-b2e7551c5d07",
         "away_team_id": "6295c59d-6cc0-4161-832e-a398185f147c",
         "venue": "Venue 3",
@@ -1063,8 +1091,7 @@ It returns all games
 [
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue 1",
@@ -1072,8 +1099,7 @@ It returns all games
     },
     {
         "id": "1aa7d5d5-47c0-4b7f-aa40-f894faff2753",
-        "season_start": 2019,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b9386ac4-ccb9-4532-8c4e-b2e7551c5d07",
         "away_team_id": "6295c59d-6cc0-4161-832e-a398185f147c",
         "venue": "Venue 2",
@@ -1081,8 +1107,7 @@ It returns all games
     }
     {
         "id": "1aa7d5d5-47c0-4b7f-aa40-f894faff2753",
-        "season_start": 2019,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b9386ac4-ccb9-4532-8c4e-b2e7551c5d07",
         "away_team_id": "6295c59d-6cc0-4161-832e-a398185f147c",
         "venue": "Venue 3",
@@ -1115,13 +1140,11 @@ away_team | retrieve games alongside away team associated.
 
 ### Sortable Columns
 
-`GET /api/v1/teams?sorting_by[]=<param>`
+`GET /api/v1/games?sorting_by[]=<param>`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-name | DESC | retrieve games sorted by name.
-season_start | DESC | retrieve games sorted by season start.
-season_end | DESC | retrieve games sorted by season end.
+created_at | DESC | retrieve games sorted by record creation date.
 
 
 <aside class="success">
@@ -1135,8 +1158,7 @@ Remember — To use the token on request header, to be able to perform requests!
 ```json
     {
         "id": "7ccf336c-97e4-449c-8408-d170e95264a9",
-        "season_start": 2015,
-        "season_end": 2018,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "home_team_id": "b95ba865-649c-4e02-aef9-ae26b30c82c9",
         "away_team_id": "018131db-9d54-4324-a116-154712d6822e",
         "venue": "Venue",
@@ -1162,8 +1184,7 @@ ID | The ID of the game to retrieve
 
 Fields | Type | Additional Info
 --------- | ------- | -----------
-season_start | Integer | -
-season_end | Integer |-
+athletic_season_id | String | (UUID) represents an athletic season
 first_name | String |-
 last_name | String |-
 positiion | String |-
@@ -1194,8 +1215,7 @@ It returns all rosters
 [
     {
         "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
-        "season_start": 2017,
-        "season_end": 2019,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "first_name": "Player",
         "last_name": "Player Last",
         "position": "Striker",
@@ -1217,8 +1237,7 @@ It returns all rosters
 [
     {
         "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
-        "season_start": 2017,
-        "season_end": 2019,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "first_name": "Player",
         "last_name": "Player Last",
         "position": "Striker",
@@ -1250,8 +1269,7 @@ It returns all rosters
 [
     {
         "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
-        "season_start": 2017,
-        "season_end": 2019,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "first_name": "Player",
         "last_name": "Last",
         "position": "Striker",
@@ -1267,8 +1285,7 @@ It returns all rosters
     },
     {
         "id": "4ceb6427-dbc2-4d9b-8ab7-52e4bc27f917",
-        "season_start": 2018,
-        "season_end": 2020,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "first_name": "Player 2",
         "last_name": "Last 2",
         "position": "Striker",
@@ -1306,6 +1323,7 @@ season  | retrieves a roster between two dates (years).
 Parameter  | Description
 ---------  | -----------
 team | retrieve rosters alongside team associated.
+season | retrieve rosters alongside season associated
 
 ### Sortable Columns
 
@@ -1314,8 +1332,6 @@ team | retrieve rosters alongside team associated.
 Parameter | Default | Description
 --------- | ------- | -----------
 name | DESC | retrieve rosters sorted by name.
-season_start | DESC | retrieve rosters sorted by season start.
-season_end | DESC | retrieve rosters sorted by season end.
 first_name | DESC | retrieve rosters sorted by first name.
 last_name | DESC | retrieve rosters sorted by last name.
 created_at | DESC | retrieve rosters sorted by created at.
@@ -1332,8 +1348,7 @@ Remember — To use the token on request header, to be able to perform requests!
 ```json
     {
         "id": "2da30e35-ff52-47c5-9517-628d1bccc968",
-        "season_start": 2017,
-        "season_end": 2019,
+        "athletic_season_id": "d12ob132-649c-4e02-aef9-ae27ghSc65kh",
         "first_name": "Player",
         "last_name": "Last",
         "position": "Striker",
